@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus
+  namespace: {{ template "kube-prometheus-stack.namespace" . }}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header Cache-Control "max-age=0, no-cache, no-store, must-revalidate";
+    nginx.ingress.kubernetes.io/whitelist-source-range: "X.X.X.X" # change this range to admin IPs      
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: prod.example.com
+    http:
+      paths:
+      - path: /prometheus(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ template "kube-prometheus-stack.name" . }}-prometheus
+            port:
+              number: 9090
