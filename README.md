@@ -2,7 +2,7 @@
 
 ## Overview
 
-The purpose of this document is to install (deploy) the CyanGate-customized version of [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) to a desired Kubernetes cluster for monitoring the Kubernetes resources and the underlying infrastructure.
+The purpose of this document is to install (deploy) a customized version of [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) to a desired Kubernetes cluster for monitoring the Kubernetes resources and the underlying infrastructure.
 
 ## Prerequisites
 
